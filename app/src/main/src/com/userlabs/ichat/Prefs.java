@@ -13,7 +13,7 @@ public class Prefs {
     public static final int MODE_DARK = 2;
     public static final int MODE_AMOLED = 3;
 
-    public static final int DEFAULT_ACCENT = 0xFF0A84FF;
+    public static final int DEFAULT_ACCENT = 0xFF6750A4;
 
     private static SharedPreferences sp;
     /** Bumped on every appearance change so open screens know to rebuild themselves. */

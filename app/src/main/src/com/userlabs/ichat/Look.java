@@ -15,7 +15,7 @@ public class Look {
     public static final int[] ACCENTS = {
         0xFF0A84FF, // blue
         0xFF5E5CE6, // indigo
-        0xFF9B51E0, // violet
+        0xFF6750A4, // violet (brand)
         0xFFFF2D87, // pink
         0xFFFF453A, // red
         0xFFFF8A00, // orange
@@ -62,23 +62,23 @@ public class Look {
         k.accent2 = hueShift(k.accent, 34f);
         k.onAccent = lum(k.accent) > 0.62f ? 0xFF111111 : 0xFFFFFFFF;
         if (k.dark) {
-            k.bg = k.amoled ? 0xFF000000 : 0xFF0F1115;
-            k.surface = k.amoled ? 0xFF0B0B0D : 0xFF181B21;
-            k.surface2 = k.amoled ? 0xFF161618 : 0xFF22262E;
-            k.text = 0xFFF1F3F5;
-            k.text2 = 0xFF9AA3AF;
-            k.divider = 0x26FFFFFF;
-            k.inBubble = k.amoled ? 0xFF1C1C1E : 0xFF272B33;
-            k.inText = 0xFFF1F3F5;
+            k.bg = k.amoled ? 0xFF000000 : 0xFF101116;
+            k.surface = k.amoled ? 0xFF0B0B0D : 0xFF1A1B23;
+            k.surface2 = k.amoled ? 0xFF161618 : 0xFF252631;
+            k.text = 0xFFF1F2F7;
+            k.text2 = 0xFF9A9CB0;
+            k.divider = 0x1FFFFFFF;
+            k.inBubble = k.amoled ? 0xFF1C1C1E : 0xFF262833;
+            k.inText = 0xFFF1F2F7;
         } else {
-            k.bg = 0xFFFFFFFF;
-            k.surface = 0xFFF5F6F8;
-            k.surface2 = 0xFFE9EBEF;
-            k.text = 0xFF111418;
-            k.text2 = 0xFF6B7280;
-            k.divider = 0x1A000000;
-            k.inBubble = 0xFFEDEEF2;
-            k.inText = 0xFF111418;
+            k.bg = 0xFFF7F8FC;
+            k.surface = 0xFFFFFFFF;
+            k.surface2 = 0xFFEEF0F6;
+            k.text = 0xFF171827;
+            k.text2 = 0xFF77798C;
+            k.divider = 0x14171827;
+            k.inBubble = 0xFFECEEF5;
+            k.inText = 0xFF171827;
         }
         k.danger = 0xFFFF453A;
         return k;

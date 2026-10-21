@@ -1,3 +1,19 @@
+# iChat v2.3 — unified Compose design system
+
+## Design system (new)
+- `ui/theme/Theme.kt` — one `IChatTheme` (Material 3 colour scheme, shapes, typography) built from `Look`, so light / dark / AMOLED and the user's accent apply everywhere.
+- `ui/components/Components.kt` — shared top bar, avatar, cards, settings rows, bar chart.
+- `ui/ComposeBaseActivity.kt` — edge-to-edge bars + rebuild on style change.
+- `Look` palette and default accent (violet `#6750A4`) now match the Compose home screen, so the screens still built with Views show identical colours.
+
+## Screens in Jetpack Compose
+Home, conversation list (`MainActivity` + `ConversationRepo`), Settings, Starred, Insights.
+
+## Still View-based (next to migrate)
+`ThreadActivity` (chat bubbles), `NewMessageActivity`, `StyleActivity`. They already use the new palette.
+
+---
+
 # iChat v2.2 — AndroidX / Compose hardening pass
 
 ## Applied in this revision
