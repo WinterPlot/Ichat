@@ -63,7 +63,7 @@ class SettingsActivity : ComposeBaseActivity() {
         refresh++
     }
 
-    override fun onRequestPermissionsResult(code: Int, perms: Array<out String>, res: IntArray) {
+    override fun onRequestPermissionsResult(code: Int, perms: Array<String>, res: IntArray) {
         super.onRequestPermissionsResult(code, perms, res)
         if (code == REQ_PHONE) {
             Sims.invalidate()
@@ -71,7 +71,7 @@ class SettingsActivity : ComposeBaseActivity() {
         }
     }
 
-    private fun go(cls: Class<*>) = startActivity(Intent(this, cls))
+    private fun go(cls: Class<*>) = startActivity(Intent(this@SettingsActivity, cls))
 
     private fun openSystemNotifications() {
         try {
@@ -83,16 +83,16 @@ class SettingsActivity : ComposeBaseActivity() {
             }
             startActivity(i)
         } catch (e: Exception) {
-            Ui.toast(this, R.string.no_app)
+            Ui.toast(this@SettingsActivity, R.string.no_app)
         }
     }
 
     @Composable
     private fun Pref(title: Int, sub: Int, key: String, def: Boolean, appearance: Boolean) {
-        var on by remember { mutableStateOf(Prefs.getBool(this, key, def)) }
+        var on by remember { mutableStateOf(Prefs.getBool(this@SettingsActivity, key, def)) }
         ToggleRow(stringResource(title), stringResource(sub), on) {
             on = it
-            Prefs.putBool(this, key, it)
+            Prefs.putBool(this@SettingsActivity, key, it)
             if (appearance) {
                 Prefs.touch()
                 markSeen()
@@ -206,7 +206,7 @@ class SettingsActivity : ComposeBaseActivity() {
 
     @Composable
     private fun QuickRepliesDialog(onDismiss: () -> Unit) {
-        var text by remember { mutableStateOf(Prefs.quickReplies(this).joinToString("\n")) }
+        var text by remember { mutableStateOf(Prefs.quickReplies(this@SettingsActivity).joinToString("\n")) }
         AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(stringResource(R.string.set_quick)) },
@@ -227,14 +227,14 @@ class SettingsActivity : ComposeBaseActivity() {
             },
             confirmButton = {
                 TextButton(onClick = {
-                    Prefs.putString(this, "quick_replies", text)
+                    Prefs.putString(this@SettingsActivity, "quick_replies", text)
                     onDismiss()
                 }) { Text(stringResource(R.string.save)) }
             },
             dismissButton = {
                 Column {
                     TextButton(onClick = {
-                        Prefs.remove(this, "quick_replies")
+                        Prefs.remove(this@SettingsActivity, "quick_replies")
                         onDismiss()
                     }) { Text(stringResource(R.string.reset)) }
                     TextButton(onClick = onDismiss) { Text(stringResource(R.string.cancel)) }
@@ -245,7 +245,7 @@ class SettingsActivity : ComposeBaseActivity() {
 
     @Composable
     private fun BlockedDialog(onDismiss: () -> Unit) {
-        var keys by remember { mutableStateOf(Prefs.blockedKeys(this).toList()) }
+        var keys by remember { mutableStateOf(Prefs.blockedKeys(this@SettingsActivity).toList()) }
         AlertDialog(
             onDismissRequest = onDismiss,
             title = { Text(stringResource(R.string.set_blocked)) },

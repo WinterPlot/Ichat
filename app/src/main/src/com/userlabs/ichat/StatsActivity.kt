@@ -122,7 +122,7 @@ class StatsActivity : ComposeBaseActivity() {
             // no permission: empty stats
         }
         s.top = map.values.sortedByDescending { it.count }.take(6).onEach {
-            val info = Contacts.lookup(this, it.address)
+            val info = Contacts.lookup(this@StatsActivity, it.address)
             it.info = info
             it.name = info.name
         }

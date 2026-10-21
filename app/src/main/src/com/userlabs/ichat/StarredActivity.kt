@@ -72,7 +72,7 @@ class StarredActivity : ComposeBaseActivity() {
     }
 
     private fun query(): List<StarRow> {
-        val ids = Prefs.starredIds(this)
+        val ids = Prefs.starredIds(this@StarredActivity)
         if (ids.isEmpty()) return emptyList()
         val out = ArrayList<StarRow>()
         try {
@@ -83,7 +83,7 @@ class StarredActivity : ComposeBaseActivity() {
             )?.use { c ->
                 while (c.moveToNext()) {
                     val addr = c.getString(1) ?: continue
-                    val info = Contacts.lookup(this, addr)
+                    val info = Contacts.lookup(this@StarredActivity, addr)
                     out.add(StarRow(c.getLong(0), addr, info.name, c.getString(2), c.getLong(3), info))
                 }
             }
@@ -164,7 +164,7 @@ class StarredActivity : ComposeBaseActivity() {
                 text = { Text(stringResource(R.string.unstar_q)) },
                 confirmButton = {
                     TextButton(onClick = {
-                        Prefs.setStarred(this, r.id, false)
+                        Prefs.setStarred(this@StarredActivity, r.id, false)
                         toRemove = null
                         load()
                     }) { Text(stringResource(R.string.unstar)) }

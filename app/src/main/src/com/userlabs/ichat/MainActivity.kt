@@ -121,7 +121,7 @@ class MainActivity : ComposeBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        isDefault = SmsUtil.isDefault(this)
+        isDefault = SmsUtil.isDefault(this@MainActivity)
         permsOk = hasPermissions()
         if (permsOk) {
             if (!observing) {
@@ -143,7 +143,7 @@ class MainActivity : ComposeBaseActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(code: Int, perms: Array<out String>, res: IntArray) {
+    override fun onRequestPermissionsResult(code: Int, perms: Array<String>, res: IntArray) {
         super.onRequestPermissionsResult(code, perms, res)
         permsOk = hasPermissions()
         if (permsOk) load()
@@ -199,7 +199,7 @@ class MainActivity : ComposeBaseActivity() {
     }
 
     private fun open(cv: Conv) {
-        val i = Intent(this, ThreadActivity::class.java).putExtra("address", cv.address)
+        val i = Intent(this@MainActivity, ThreadActivity::class.java).putExtra("address", cv.address)
         if (cv.kind == 2) i.putExtra("jump_id", cv.msgId)
         startActivity(i)
     }
@@ -222,27 +222,27 @@ class MainActivity : ComposeBaseActivity() {
         when (action) {
             ACT_PIN -> {
                 val all = sel.all { it.pinned }
-                sel.forEach { Prefs.setPinned(this, it.address, !all) }
+                sel.forEach { Prefs.setPinned(this@MainActivity, it.address, !all) }
             }
             ACT_READ -> {
                 if (sel.any { it.unread > 0 }) {
                     sel.forEach {
-                        Prefs.setMarkedUnread(this, it.address, false)
-                        SmsUtil.markThreadRead(this, it.threadId)
-                        Notifier.cancel(this, it.address)
+                        Prefs.setMarkedUnread(this@MainActivity, it.address, false)
+                        SmsUtil.markThreadRead(this@MainActivity, it.threadId)
+                        Notifier.cancel(this@MainActivity, it.address)
                     }
                 } else {
-                    sel.forEach { Prefs.setMarkedUnread(this, it.address, true) }
+                    sel.forEach { Prefs.setMarkedUnread(this@MainActivity, it.address, true) }
                 }
             }
             ACT_MUTE -> {
                 val all = sel.all { it.muted }
-                sel.forEach { Prefs.setMuted(this, it.address, !all) }
+                sel.forEach { Prefs.setMuted(this@MainActivity, it.address, !all) }
             }
             ACT_BLOCK -> {
                 val all = sel.all { it.blocked }
-                sel.forEach { Prefs.setBlocked(this, it.address, !all) }
-                Ui.toast(this, if (all) R.string.unblocked else R.string.blocked_toast)
+                sel.forEach { Prefs.setBlocked(this@MainActivity, it.address, !all) }
+                Ui.toast(this@MainActivity, if (all) R.string.unblocked else R.string.blocked_toast)
             }
         }
         clearSelection()
@@ -251,7 +251,7 @@ class MainActivity : ComposeBaseActivity() {
 
     private fun deleteSelected() {
         val sel = selectedConvs()
-        sel.forEach { SmsUtil.deleteThread(this, it.address) }
+        sel.forEach { SmsUtil.deleteThread(this@MainActivity, it.address) }
         clearSelection()
         load()
     }
@@ -323,7 +323,7 @@ class MainActivity : ComposeBaseActivity() {
                 confirmButton = {
                     TextButton(onClick = {
                         confirmDelete = false
-                        if (SmsUtil.isDefault(this)) deleteSelected() else Ui.toast(this, R.string.need_default)
+                        if (SmsUtil.isDefault(this@MainActivity)) deleteSelected() else Ui.toast(this@MainActivity, R.string.need_default)
                     }) { Text(stringResource(R.string.delete), color = MaterialTheme.colorScheme.error) }
                 },
                 dismissButton = {
